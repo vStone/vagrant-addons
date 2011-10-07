@@ -1,0 +1,7 @@
+My custom Vagrantfile to package with boxes I create.
+
+It's preconfigured to be used with Puppet and it also adds some methods:
+
+[~/vagrant-project]$ vagrant puppet
+[~/vagrant=project]$ vagrant puppet module_add
+
