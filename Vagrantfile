@@ -53,12 +53,12 @@ Vagrant::Config.run do |config|
 end
 
 
-class PuppetTools < Vagrant::Command::GroupBase
+class PuppetCommand < Vagrant::Command::GroupBase
   register "puppet", "Do all sorts of fun stuff with puppet"
 
   source_root File.expand_path(FileUtils.pwd() + "/.templates", Vagrant.source_root)
 
-  desc "module_add", "Do stuff with modules"
+  desc "module_add NAME", "Do stuff with modules"
   def module_add(name)
     env.ui.info "Create puppet module structure for new module '#{name}'"
     empty_directory "modules/#{name}/templates"
