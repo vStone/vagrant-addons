@@ -1,0 +1,4 @@
+## Moduleinit.erb ##
+class <%= config[:name] %> {
+
+}
