@@ -63,11 +63,8 @@ class PuppetTools < Vagrant::Command::GroupBase
     env.ui.info "Create puppet module structure for new module '#{name}'"
     empty_directory "modules/#{name}/templates"
     empty_directory "modules/#{name}/manifests"
-#    FileUtils.mkdir_p("modules/#{name}/manifests")
-#    FileUtils.mkdir_p("modules/#{name}/templates")
     opts = { :name => "#{name}" }
-    init_file = template('module_init.tt', "modules/#{name}/manifests/init.pp", opts) 
-    #File.open("modules/#{name}/manifests/init.pp", "w") { |f| f.write(init_file) }
+    template('module_init.tt', "modules/#{name}/manifests/init.pp", opts) 
   end
 
 end
