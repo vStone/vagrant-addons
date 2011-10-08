@@ -1,7 +1,20 @@
 My custom Vagrantfile to package with boxes I create.
 
-It's preconfigured to be used with Puppet and it also adds some methods:
+Included addons
 
-[~/vagrant-project]$ vagrant puppet
-[~/vagrant=project]$ vagrant puppet module_add
+  * vagrant puppet <command>
+
+    - module_add NAME     # Generates a puppet module structure in ./modules/NAME
+      
+      The template that is used to generate the init.pp file is 
+      located in in the .templates/ folder: module_init.tt
+
+
+  * vagrant config
+
+    - multivm_gen         # Generates a multivm env with every available box.
+
+      The file name will be MultiVMVagrantfile. After generating,
+      an example on how to include it in your Vagrantfile will be 
+      presented. By default I comment it out (disabling it).
 

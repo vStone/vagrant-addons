@@ -3,6 +3,12 @@ Vagrant::Config.run do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  # Automagicly generate a multivm env for every box vagrant has available
+  # if File.exist?('MultiVMVagrantfile')
+  #   $config = config
+  #   load 'MultiVMVagrantfile'
+  # end
+  
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "base"
 
@@ -54,5 +60,6 @@ end
 
 ## Enable the puppet addon.
 require '.addons/puppet'
+require '.addons/config'
 
 # vim: set filetype=ruby : #

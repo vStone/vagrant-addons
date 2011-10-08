@@ -1,0 +1,13 @@
+## Use these by including the file in your Vagrantfile
+
+<% 
+  config[:boxes].each do |box| 
+    varname = box.name.gsub(/[-.]/, "_")
+%>
+  $config.vm.define :<%= varname %> do |<%= varname %>_config|
+    <%= varname %>_config.vm.box = "<%= box.name %>"
+  end
+<% end -%>
+
+
+# vim: set filetype=ruby : #
