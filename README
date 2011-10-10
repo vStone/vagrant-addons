@@ -1,20 +1,37 @@
++-----------------+
+| Introduction    |
++-----------------+
+
 My custom Vagrantfile to package with boxes I create.
 
-Included addons
++-----------------+
+| Instructions    |
++-----------------+
 
-  * vagrant puppet <command>
+To use these, put the vagrant-addons folder in your vagrant project folder and
+add the following lines to your Vagrantfile:
 
-    - module_add NAME     # Generates a puppet module structure in ./modules/NAME
-      
-      The template that is used to generate the init.pp file is 
-      located in in the .templates/ folder: module_init.tt
+  ## Enable the addons.
+  load File.expand_path('../.addons/Vagrantaddons', __FILE__)
 
 
-  * vagrant config
++-----------------+
+| Included addons |
++-----------------+
 
-    - multivm_gen         # Generates a multivm env with every available box.
+* vagrant puppet <command>
 
-      The file name will be MultiVMVagrantfile. After generating,
-      an example on how to include it in your Vagrantfile will be 
-      presented. By default I comment it out (disabling it).
+  - module_add NAME     # Generates a puppet module structure in ./modules/NAME
+    
+    The template that is used to generate the init.pp file is 
+    located in in the .templates/ folder: module_init.tt
+
+
+* vagrant config
+
+  - multivm_gen         # Generates a multivm env with every available box.
+
+    The file name will be MultiVMVagrantfile. After generating,
+    an example on how to include it in your Vagrantfile will be 
+    presented. By default I comment it out (disabling it).
 
