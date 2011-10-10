@@ -1,0 +1,71 @@
+<%
+
+  rundir = config[:rundir]
+  vardir = config[:vardir]
+  confdir = config[:confdir]
+  configfile = config[:config]
+  manifestdir = config[:manifestdir]
+  modulepath = config[:modulepath]
+  bindaddress = config[:bindaddress]
+  masterport = config[:masterport]
+  puppetport = config[:puppetport]
+  user = config[:puppet_user]
+  group = config[:puppet_group]
+  logdir = config[:logdir]
+
+-%>
+[master]
+  # smtpserver = none
+  # reportfrom = report@vagrant.hostname
+  
+  rundir = <%= rundir %>
+  vardir = <%= vardir %> 
+  confdir = <%= confdir %>
+  
+  logdir = <%= logdir %>
+
+  # The configuration file for master.
+  # The default value is '$confdir/puppet.conf'.
+  config = <%= configfile %> 
+
+  # Where puppet master looks for its manifests.
+  # The default value is '$confdir/manifests'.
+  manifestdir = <%= manifestdir %> 
+
+  # The search path for modules as a colon-separated list of
+  # directories.
+  # The default value is '$confdir/modules:/usr/share/puppet/modules'.
+  modulepath = <%= modulepath %>:/usr/share/puppet/modules
+
+  # The name to use the Certificate Authority certificate.
+  # The default value is 'Puppet CA: $certname'.
+  # ca_name = Puppet CA: <hostname> 
+
+  # The address a listening server should bind to.  Mongrel servers
+  # default to 127.0.0.1 and WEBrick defaults to 0.0.0.0.
+  # The default value is ''.
+  bindaddress = <%= bindaddress %>
+
+  # Which port puppet master listens on.
+  # The default value is '8140'.
+  masterport = <%= masterport %> 
+
+  # Which port puppet agent listens on.
+  # The default value is '8139'.
+  puppetport = <%= puppetport %> 
+
+  # Whether puppet agent should listen for
+  # connections.  If this is true, then by default only the
+  # `runner` server is started, which allows remote authorized
+  # and authenticated nodes to connect and trigger `puppet agent`
+  # runs.
+  # listen = false
+
+  # The user puppet master should run as.
+  # The default value is 'puppet'.
+  user = <%= user %> 
+
+  # The group puppet master should run as.
+  # The default value is 'puppet'.
+  group = <%= group  %>
+

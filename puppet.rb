@@ -8,14 +8,45 @@ module Vagrant
       desc "todo", "A todo list of that needs to be done to get this working"
       def todo()
         env.ui.info("@todo:")
-        env.ui.info("1. Check if making this method a subcommand works")
-        env.ui.info("2. Add method to generate a config (thats working)")
-        env.ui.info("3. Read the stored configuration and use that to generate the config")
-        env.ui.info("4. Add method to start puppetmaster")
-        env.ui.info("5. Adjust configuration to autosign stuff etc etc. Make it useable!")
-        env.ui.info("6. Add method to stop puppetmaster")
-        env.ui.info("7. Add method to reset puppetmaster data (gets rid of everything but the configuration)")
+        env.ui.info("1. Add method to generate a config (thats working):: In progress")
+        env.ui.info("2. Read the stored configuration and use that to generate the config")
+        env.ui.info("3. Add method to start puppetmaster")
+        env.ui.info("4. Adjust configuration to autosign stuff etc etc. Make it useable!")
+        env.ui.info("5. Add method to stop puppetmaster")
+        env.ui.info("6. Add method to reset puppetmaster data (gets rid of everything but the configuration)")
       end
+
+      desc "genconfig", "Generate a puppetmaster configuration setup"
+      method_option :name, :aliases => '-n', :type => :string, :default => "puppetmaster", 
+         :desc => 'A custom name for the puppetmaster. This is also used as target folder where the configuration will be setup.'
+      method_option :manifestdir, :aliases => '', :type => :string, :default => '', :desc => ''
+      method_option :modulepath, :aliases => '', :type => :string, :default => '', :desc => ''
+      method_option :bindaddress, :aliases => '', :type => :string, :default => '', :desc => ''
+      method_option :masterport, :aliases => '', :type => :numeric, :default => '', :desc => ''
+      method_option :puppetport, :aliases => '', :type => :numeric, :default => '', :desc => ''
+      def genconfig()
+        name = options[:name]
+        env.ui.info "Generate the config: '#{name}"
+        env.ui.info "Target: ./#{name}/"
+        opts = { 
+          :name => name,
+          :rundir => "./#{name}/run",
+          :vardir => "./#{name}/var",
+          :confdir => "./#{name}/",
+          :config => "./#{name}/puppetmaster.conf",
+          :logdir => "./#{name}/logs",
+          :manifestdir => "//manifests/",
+          :modulepath => "./modules/",
+          :bindaddress => '',
+          :masterport => 8140,
+          :puppetport => 8139,
+          :puppet_user => ENV['USERNAME'],
+          :puppet_group => 'users', 
+        }
+        directory('puppetmaster', "./#{name}/", opts)
+
+      end
+
     end
     
     
