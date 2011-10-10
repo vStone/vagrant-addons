@@ -2,13 +2,13 @@
 | Introduction    |
 +-----------------+
 
-My custom Vagrantfile to package with boxes I create.
+Some 'addons' for vagrant to speed up development.
 
 +-----------------+
 | Instructions    |
 +-----------------+
 
-To use these, put the vagrant-addons folder in your vagrant project folder and
+To use these, clone the vagrant-addons repo in your vagrant project folder and
 add the following lines to your Vagrantfile:
 
   ## Enable the addons.
