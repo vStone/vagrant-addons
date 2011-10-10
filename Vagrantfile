@@ -59,6 +59,6 @@ Vagrant::Config.run do |config|
 end
 
 ## Enable the addons.
-load File.expand_path('../.addons/Vagrantaddons', __FILE__)
+load File.expand_path('../vagrant-addons/Vagrantaddons', __FILE__)
 
 # vim: set filetype=ruby : #

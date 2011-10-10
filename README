@@ -12,8 +12,7 @@ To use these, put the vagrant-addons folder in your vagrant project folder and
 add the following lines to your Vagrantfile:
 
   ## Enable the addons.
-  load File.expand_path('../.addons/Vagrantaddons', __FILE__)
-
+  load File.expand_path('../vagrant-addons/Vagrantaddons', __FILE__)
 
 +-----------------+
 | Included addons |
