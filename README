@@ -1,36 +1,50 @@
-+-----------------+
-| Introduction    |
-+-----------------+
+INTRODUCTION
 
-Some 'addons' for vagrant to speed up development.
+  Some 'addons' for vagrant to speed up development.
 
-+-----------------+
-| Instructions    |
-+-----------------+
+INSTRUCTIONS
 
-To use these, clone the vagrant-addons repo in your vagrant project folder and
-add the following lines to your Vagrantfile:
+  To use these, clone the vagrant-addons repo in your vagrant project folder and
+  add the following lines to your Vagrantfile:
 
   ## Enable the addons.
   load File.expand_path('../vagrant-addons/Vagrantaddons', __FILE__)
 
-+-----------------+
-| Included addons |
-+-----------------+
 
-* vagrant puppet <command>
-
-  - module_add NAME     # Generates a puppet module structure in ./modules/NAME
-    
-    The template that is used to generate the init.pp file is 
-    located in in the .templates/ folder: module_init.tt
+ADDONS
 
 
-* vagrant config
+  vagrant config                       # Some Vagrantfile configuration tools
+  vagrant config help [COMMAND]        # Describe subcommands or one specific subcommand
+  vagrant config multivm_gen           # Generate multivm statements for all installed boxes
 
-  - multivm_gen         # Generates a multivm env with every available box.
+---
 
-    The file name will be MultiVMVagrantfile. After generating,
-    an example on how to include it in your Vagrantfile will be 
-    presented. By default I comment it out (disabling it).
+  vagrant puppet                       # Do all sorts of fun stuff with puppet
+  vagrant puppet help [COMMAND]        # Describe subcommands or one specific subcommand
+  vagrant puppet master                # Control a contained puppetmaster instance
+                                       # See `vagrant puppetmaster`
+  vagrant puppet mkdirs                # Create a default puppet structure
+  vagrant puppet module_add [NAME]     # Add an existing puppet module to your modules
+    -f, [--force=FORCE]                # Force adding this module: overwrites 
+                                       # existing module with same name
+  vagrant puppet module_create [NAME]  # Create a new puppet module structure
+
+---
+  
+  vagrant puppetmaster                 # Control a contained puppetmaster instance
+  vagrant puppetmaster help [COMMAND]  # Describe subcommands or one specific subcommand
+  vagrant puppetmaster genconfig       # Generate a puppetmaster configuration setup
+        [--puppetport=N]               # 
+        [--manifestdir=MANIFESTDIR]    # 
+        [--modulepath=MODULEPATH]      # 
+        [--bindaddress=BINDADDRESS]    # 
+    -n, [--name=NAME]                  # A custom name for the puppetmaster. This is also 
+                                       # used as target folder where the configuration will 
+                                       # be setup.
+                                       # Default: puppetmaster
+        [--masterport=N]               # 
+
+  vagrant puppetmaster todo            # A todo list of that needs to be done to get this working
+
 
