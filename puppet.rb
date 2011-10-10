@@ -25,6 +25,16 @@ module Vagrant
       method_option :masterport, :aliases => '', :type => :numeric, :default => '', :desc => ''
       method_option :puppetport, :aliases => '', :type => :numeric, :default => '', :desc => ''
       def genconfig()
+        begin
+          require 'env'
+        rescue LoadError
+          env.ui.error "Using genconfig requires the gem 'env' installed."
+          exit
+        end
+
+        ## todo: use env for user/group stuff and maybe hostname?
+        ## todo: use some of the customization options (method_option) for defaulting these values below
+
         name = options[:name]
         env.ui.info "Generate the config: '#{name}"
         env.ui.info "Target: ./#{name}/"
