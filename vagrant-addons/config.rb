@@ -6,8 +6,7 @@ module Vagrant
     class ConfigCommand < Vagrant::Command::GroupBase
       register "config", "Some Vagrantfile configuration tools"
 
-      source_root File.expand_path(FileUtils.pwd() + "/.templates", Vagrant.source_root)
-
+      source_root File.expand_path("../templates", __FILE__)
       
       desc "multivm_gen", "Generate multivm statements for all installed boxes"
       def multivm_gen

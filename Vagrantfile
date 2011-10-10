@@ -58,8 +58,7 @@ Vagrant::Config.run do |config|
 
 end
 
-## Enable the puppet addon.
-require '.addons/puppet'
-require '.addons/config'
+## Enable the addons.
+load File.expand_path('../.addons/Vagrantaddons', __FILE__)
 
 # vim: set filetype=ruby : #
