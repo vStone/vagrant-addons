@@ -17,20 +17,22 @@
 [master]
   # smtpserver = none
   # reportfrom = report@vagrant.hostname
-  
+
   rundir = <%= rundir %>
-  vardir = <%= vardir %> 
+  vardir = <%= vardir %>
   confdir = <%= confdir %>
-  
+
   logdir = <%= logdir %>
+
+  localconfig = $vardir/localconfig
 
   # The configuration file for master.
   # The default value is '$confdir/puppet.conf'.
-  config = <%= configfile %> 
+  config = <%= configfile %>
 
   # Where puppet master looks for its manifests.
   # The default value is '$confdir/manifests'.
-  manifestdir = <%= manifestdir %> 
+  manifestdir = <%= manifestdir %>
 
   # The search path for modules as a colon-separated list of
   # directories.
@@ -39,7 +41,7 @@
 
   # The name to use the Certificate Authority certificate.
   # The default value is 'Puppet CA: $certname'.
-  # ca_name = Puppet CA: <hostname> 
+  # ca_name = Puppet CA: <hostname>
 
   # The address a listening server should bind to.  Mongrel servers
   # default to 127.0.0.1 and WEBrick defaults to 0.0.0.0.
@@ -48,11 +50,11 @@
 
   # Which port puppet master listens on.
   # The default value is '8140'.
-  masterport = <%= masterport %> 
+  masterport = <%= masterport %>
 
   # Which port puppet agent listens on.
   # The default value is '8139'.
-  puppetport = <%= puppetport %> 
+  puppetport = <%= puppetport %>
 
   # Whether puppet agent should listen for
   # connections.  If this is true, then by default only the
@@ -63,9 +65,53 @@
 
   # The user puppet master should run as.
   # The default value is 'puppet'.
-  user = <%= user %> 
+  user = <%= user %>
 
   # The group puppet master should run as.
   # The default value is 'puppet'.
   group = <%= group  %>
+
+
+  ca_server = puppet
+
+  # The explicit value used for the node name for all requests the agent
+  # makes to the master. WARNING: This setting is mutually exclusive with
+  # node_name_fact.  Changing this setting also requires changes to the default
+  # auth.conf configuration on the Puppet Master.  Please see
+  # http://links.puppetlabs.com/node_name_value for more information.
+  # The default value is '$certname'.
+  # node_name_value = membrane.dc01.uni
+
+  manifest = $manifestdir/<%= initfile %>
+
+  # Where puppet master logs.  This is generally not used,
+  # since syslog is the default log destination.
+  # The default value is '$logdir/puppetmaster.log'.
+  masterlog = $logdir/puppetmaster.log
+
+
+  # The name to use when handling certificates.  Defaults
+  # to the fully qualified domain name.
+  # The default value is 'membrane.dc01.uni'.
+  # certname = membrane.dc01.uni
+
+
+  # Send the process into the background.  This is the default.
+  # The default value is 'true'.
+  # daemonize = true
+
+  # Whether to enable autosign.  Valid values are true (which
+  # autosigns any key request, and is a very bad idea), false (which
+  # never autosigns any key request), and the path to a file, which
+  # uses that configuration file to determine which keys to sign.
+  # The default value is '$confdir/autosign.conf'.
+  autosign = $confdir/autosign.conf
+
+
+  # The log level for Rails connections.  The value must be
+  # a valid log level within Rails.  Production environments normally use `info`
+  # and other environments normally use `debug`.
+  # The default value is 'info'.
+  rails_loglevel = debug
+
 

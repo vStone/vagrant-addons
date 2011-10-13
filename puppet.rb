@@ -18,26 +18,66 @@ module Vagrant
 
       desc "genconfig", "Generate a puppetmaster configuration setup"
       method_option :name, :aliases => '-n', :type => :string, :default => "puppetmaster", 
-         :desc => 'A custom name for the puppetmaster. This is also used as target folder where the configuration will be setup.'
-      method_option :manifestdir, :aliases => '', :type => :string, :default => '', :desc => ''
-      method_option :modulepath, :aliases => '', :type => :string, :default => '', :desc => ''
-      method_option :bindaddress, :aliases => '', :type => :string, :default => '', :desc => ''
-      method_option :masterport, :aliases => '', :type => :numeric, :default => '', :desc => ''
-      method_option :puppetport, :aliases => '', :type => :numeric, :default => '', :desc => ''
+        :desc => 'A custom name for the puppetmaster. This is also used as target folder where the configuration will be setup.'
+      method_option :manifestdir, :aliases => '-m', :type => :string,
+        :desc => 'Where puppet master looks for his manifests. Defaults to ./manifests .'
+      method_option :modulepath, :aliases => '-p', :type => :string,
+        :desc => 'The search path for modules as a colon seperated list of directories. Defaults to ./modules .'
+      method_option :bindaddress, :aliases => '-b', :type => :string, :default => '',
+        :desc => 'Which address puppet master binds on.'
+      method_option :masterport, :aliases => '-p', :type => :numeric, :default => 8140,
+        :desc => 'Which port puppet master listens on.'
+      method_option :puppetport, :aliases => '-c', :type => :numeric, :default => 8139,
+        :desc => 'Which port pupet agent listens on.'
+      method_option :user, :aliases => '-u', :type => :string,
+        :desc => 'User name to run puppetmaster as. Defaults to current user.'
+      method_option :group, :aliases => '-g', :type => :string,
+        :desc => 'Group name to run puppet master as. Defaults to current group.'
       def genconfig()
         begin
-          require 'env'
+          require 'etc'
         rescue LoadError
-          env.ui.error "Using genconfig requires the gem 'env' installed."
+          env.ui.error "Using genconfig requires the gem 'etc' installed."
           exit
         end
 
         ## todo: use env for user/group stuff and maybe hostname?
         ## todo: use some of the customization options (method_option) for defaulting these values below
-
         name = options[:name]
         env.ui.info "Generate the config: '#{name}"
         env.ui.info "Target: ./#{name}/"
+
+        username = options[:user]
+        if ! username
+          username = Etc.getpwuid(Process.euid).name
+        end
+
+        groupname = options[:group]
+        if ! groupname
+          groupname = Etc.getgrgid(Process.egid).name
+        end
+
+        manifest_dir = options[:manifestdir]
+        if ! manifest_dir
+          manifest_dir = File.expand_path(File.join(".", "manifests"))
+        end
+
+        if File.exists(File.join(manifest_dir), 'site.pp')
+          initfile = File.join(manifest_dir), 'site.pp')
+        else
+          initfile = File.join(manifest_dir), 'init.pp')
+        end
+
+        module_path = options[:modulepath]
+        if ! module_path
+          module_path = File.expand_path(File.join(".", "modules"))
+        end
+
+        ## Default is set by method_option
+        master_port = options[:masterport]
+        puppet_port = options[:puppetport]
+
+
         opts = { 
           :name => name,
           :rundir => "./#{name}/run",
@@ -45,13 +85,14 @@ module Vagrant
           :confdir => "./#{name}/",
           :config => "./#{name}/puppetmaster.conf",
           :logdir => "./#{name}/logs",
-          :manifestdir => "//manifests/",
-          :modulepath => "./modules/",
+          :manifestdir => manifest_dir,
+          :modulepath => module_path,
           :bindaddress => '',
           :masterport => 8140,
           :puppetport => 8139,
-          :puppet_user => ENV['USERNAME'],
-          :puppet_group => 'users', 
+          :puppet_user => username,
+          :puppet_group => groupname,
+          :initfile   => initfile,
         }
         directory('puppetmaster', "./#{name}/", opts)
 
@@ -87,7 +128,7 @@ module Vagrant
       end
 
       desc 'module_add [NAME]', 'Add an existing puppet module to your modules'
-      method_option :force, :aliases => '-f', :desc => "Force adding this module: overwrites existing module with same name"
+      method_option :force, :aliases => '-f', :type => :boolean, :desc => "Force adding this module: overwrites existing module with same name"
       def module_add(name)
         env.ui.info "Adding module #{name}."
       end
