@@ -16,8 +16,18 @@ module Vagrant
         env.ui.info("6. Add method to reset puppetmaster data (gets rid of everything but the configuration)")
       end
 
+
+      desc "start", "Start a puppet master"
+      method_option :name, :aliases => '-n', :type => :string, :default => "puppetmaster",
+        :desc => 'A custom name for the puppetmaster. This is also used as target folder where the configuration will be setup.'
+      def start()
+        name = options[:name]
+
+      end
+
+
       desc "genconfig", "Generate a puppetmaster configuration setup"
-      method_option :name, :aliases => '-n', :type => :string, :default => "puppetmaster", 
+      method_option :name, :aliases => '-n', :type => :string, :default => "puppetmaster",
         :desc => 'A custom name for the puppetmaster. This is also used as target folder where the configuration will be setup.'
       method_option :manifestdir, :aliases => '-m', :type => :string,
         :desc => 'Where puppet master looks for his manifests. Defaults to ./manifests .'
