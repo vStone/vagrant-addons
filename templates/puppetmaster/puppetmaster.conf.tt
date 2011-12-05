@@ -12,6 +12,7 @@
   user = config[:puppet_user]
   group = config[:puppet_group]
   logdir = config[:logdir]
+  initfile = config[:initfile]
 
 -%>
 [master]

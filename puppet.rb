@@ -62,10 +62,10 @@ module Vagrant
           manifest_dir = File.expand_path(File.join(".", "manifests"))
         end
 
-        if File.exists(File.join(manifest_dir), 'site.pp')
-          initfile = File.join(manifest_dir), 'site.pp')
+        if File.exists?(File.join(manifest_dir, 'site.pp'))
+          initfile = 'site.pp'
         else
-          initfile = File.join(manifest_dir), 'init.pp')
+          initfile = 'init.pp'
         end
 
         module_path = options[:modulepath]
